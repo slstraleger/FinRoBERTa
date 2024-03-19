@@ -22,7 +22,7 @@ import HiAGM.helper.logger as logger
 from torch.utils.data import DataLoader
 
 INPUT_DATA_DIR = 'data/HiAGM/data'
-HIAGM_MODEL_LOC = 'scripts_used_for_modelling/HiAGM-RoBERTa/best_HiAGM-RoBERTa.pt'
+HIAGM_MODEL_LOC = 'scripts_used_for_modelling/'
 N_LABELS = 28
 BATCH_SIZE = 1
 MAX_LENGTH = 64
@@ -392,7 +392,7 @@ def objective(trial, embedding_model_loc, output_name, hiagm_params):
 
         hiagm = ModifiedHiAGM(config, corpus_vocab, model_type=config.model.type, model_mode='TRAIN',
                               emb=RobertaForMaskedLM.from_pretrained(embedding_model_loc).roberta.embeddings)
-        load_checkpoint(HIAGM_MODEL_LOC, hiagm, config)
+        load_checkpoint(HIAGM_MODEL_LOC + output_name + '/best_' + output_name + '.pt', hiagm, config)
         config.train.start_epoch = 0
         hiagm.eval()
         for param in hiagm.parameters():
